@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QunilerAR</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script src="https://unpkg.com/html5-qrcode@2.3.7/html5-qrcode.min.js"></script>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+    .landing {
+  	background: linear-gradient(to bottom right, #0f9b0f, #004d00);
+  	color: #ffffff;
+  	height: 100vh;
+  	display: flex;
+  	flex-direction: column;
+  	justify-content: center;
+  	align-items: center;
+  	text-align: center;
+	}
+
+
+    .landing h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    .landing p {
+      font-size: 1em;
+      margin-bottom: 30px;
+      padding: 0 20px;
+    }
+    .start-button {
+      background: #40c45b;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.1em;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .start-button:hover {
+      background: #33a747;
+    }
+    .logo {
+      width: 120px;
+      margin: 0 auto 20px;
+    }
+    header {
+      background-color: #017e3a;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 1.5em;
+    }
+    .container {
+      padding: 20px;
+    }
+    .header2 {
+      background-color: #017e3a;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .menu-item, .product {
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: 0.2s ease-in-out;
+    }
+    .menu-item:hover {
+      transform: scale(1.03);
+    }
+    .menu-item img, .product img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+    .resep {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .resep h2 {
+      color: #00a300;
+    }
+    footer {
+      background: #fff;
+      padding: 10px;
+      text-align: center;
+      border-top: 1px solid #ccc;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .card img {
+      width: 100%;
+      max-height: 150px;
+      object-fit: cover;
+    }
+    .circle-progress {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 10px solid #009900;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #333;
+      margin: 20px auto;
+    }
+    .button {
+      display: block;
+      width: 80%;
+      max-width: 300px;
+      margin: 10px auto;
+      padding: 15px;
+      border: none;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .donate { background-color: #ffcc00; }
+    .watch-ad { background-color: #00aa00; color: white; }
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid #ccc;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+    nav a {
+      text-decoration: none;
+      color: black;
+      font-size: 0.9em;
+      text-align: center;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    nav .active {
+      background-color: #017e3a;
+      color: white;
+      padding: 10px;
+      font-weight: bold;
+      border-radius: 1px;
+
+    }
+    .scan-button {
+      background: #e0ffe0;
+      padding: 10px;
+      border-radius: 10px;
+      color: #017e3a;
+      font-weight: bold;
+    }
+    .card, .product {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding: 10px;
+    }
+    .product img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-top: 5px;
+    }
+    .product span {
+      display: block;
+      font-size: 0.85em;
+      margin: 5px;
+    }
+    .search-box {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      gap: 5px;
+    }
+    .search-box input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .button {
+      background: #40c45b;
+      color: white;
+      padding: 10px 20px;
+      margin: 20px auto;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: block;
+    }
+    #reader {
+      width: 300px;
+      margin: 0 auto;
+      padding-top: 20px;
+    }
+    #result {
+      text-align: center;
+      font-size: 1.2em;
+      margin-top: 10px;
+      color: green;
+    }
+
+  .resep p {
+      text-align: justify;
+  }
+  .card p {
+      text-align: justify;
+  }
+
+  .video-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .video-thumbnail {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .video-thumbnail:hover {
+      transform: scale(1.02);
+    }
+
+    .video-button {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #017e3a;
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      transition: background 0.3s ease;
+    }
+
+    .video-button:hover {
+      background-color: #025c2b;
+    }
+    .sosmed {
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 30px;
+    text-align: left;
+  }
+
+  .sosmed h3 {
+    margin-bottom: 10px;
+    color: #017e3a;
+  }
+
+  .sosmed ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .sosmed li {
+    margin-bottom: 8px;
+  }
+
+  .sosmed a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .sosmed a:hover {
+    color: #017e3a;
+  }
+  .floating-game-btn {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background-color: #017e3a;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  transition: background 0.3s ease, transform 0.2s ease;
+  display: none;
+}
+.floating-game-btn:hover {
+  background-color: #025c2b;
+  transform: scale(1.05);
+}
+.game-container {
+  background: white;
+  padding: 30px;
+  max-width: 500px;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.option {
+  display: block;
+  margin: 10px 0;
+  padding: 12px;
+  background-color: #eee;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.option:hover {
+  background-color: #cdeac0;
+}
+.score {
+  margin-top: 20px;
+  font-weight: bold;
+  color: #017e3a;
+}
+
+  
+
+  </style>
+</head>
+<body>
+  <div id="landing" class="landing" data-aos="fade-zoom-in" data-aos-duration="1000">
+  <img class="logo" src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/logo2.png" alt="Logo" data-aos="zoom-in" />
+  <h1 data-aos="fade-up">Selamat Datang di QulinerAR</h1>
+  <p data-aos="fade-up" data-aos-delay="200">Kuliner bukan cuma soal rasa, tapi juga cerita. Yuk, eksplorasi makanan khas dengan cara baru! Siap untuk petualangan kuliner?</p>
+  <button class="start-button" onclick="startApp()" data-aos="fade-up" data-aos-delay="400">Mulai</button>
+</div>
+
+  <div id="main-app" style="display:none;">
+    <header id="page-title">Selamat Datang</header>
+    <div class="container" id="page-content"></div>
+    <nav>
+      <a href="#" onclick="loadPage('daftar',event)">Daftar</a>
+      <a href="#" onclick="loadPage('lokasi', event)">Lokasi</a>
+      <a href="#" onclick="loadPage('scan', event)" class="scan-button">Scan</a>
+      <a href="#" onclick="loadPage('tentang', event)">Tentang</a>
+      <a href="#" onclick="loadPage('sejarah', event)">Sejarah</a>
+    </nav>
+  </div>
+
+  <script>
+    const produkmakanan = [
+      { nama: 'Daun Ubi Tumbuk', img: 'https://raw.githubusercontent.com/dhani0010/QulinerAR/main/daun_ubi_tumbuk.jpeg' },
+      { nama: 'Bika Ambon', img: 'https://raw.githubusercontent.com/dhani0010/QulinerAR/main/bika_ambon.jpg' },
+      { nama: 'Soto Medan', img: 'https://raw.githubusercontent.com/dhani0010/QulinerAR/main/soto_medan.jpeg' },
+      { nama: 'Mie Gomak', img: 'https://raw.githubusercontent.com/dhani0010/QulinerAR/main/mie_gomak.jpeg' },
+      { nama: 'Arsik Ikan Mas', img: 'https://raw.githubusercontent.com/dhani0010/QulinerAR/main/arsik _ikan_mas.jpg' },
+      { nama: 'Lontong Sayur Medan', img: 'https://raw.githubusercontent.com/dhani0010/QulinerAR/main/lontong_sayur_medan.jpeg' },
+      { nama: 'Lemang', img: 'https://raw.githubusercontent.com/dhani0010/QulinerAR/main/lemang.jpg' },
+      { nama: 'Ombus-Ombus', img: 'https://raw.githubusercontent.com/dhani0010/QulinerAR/main/ombus_ombus.png' }
+    ];
+
+    function startApp() {
+      document.getElementById("landing").style.display = "none";
+      document.getElementById("main-app").style.display = "block";
+      document.getElementById("game-button").style.display = "block";
+      loadPage("tentang");
+
+
+    }
+
+    function loadPage(page, event) {
+      const title = document.getElementById('page-title');
+      const content = document.getElementById('page-content');
+
+      if (event && event.target) {
+        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+        event.target.classList.add('active');
+      }
+
+      if (page === "tentang") {
+        title.innerText = "Tentang Kami";
+        content.innerHTML = `
+          <div class="card" data-aos="fade-right">
+            <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/logo.jpeg" alt="Logo2">
+            <h2>Tentang QunilerAR</h2>
+            <p>QulinerAR adalah aplikasi inovatif yang menggabungkan dunia kuliner dengan teknologi Augmented Reality (AR). Kami hadir untuk memberikan pengalaman baru dalam menjelajahi, belajar, dan menikmati kekayaan kuliner nusantara dengan cara yang interaktif dan edukatif.
+            Dengan memanfaatkan teknologi AR, pengguna dapat:
+            Melihat resep makanan tradisional dalam bentuk visual 3D.
+            Menonton proses memasak secara interaktif langsung di depan mata.
+            Mempelajari sejarah dan budaya di balik setiap hidangan khas Indonesia.</p>
+          </div>
+          <div class="card" data-aos="fade-left" data-aos-delay="200">
+            <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/mie_gomak2.jpg" alt="Kisah Asal">
+            <h2>Latar Belakang Pembuatan QunilerAR</h2>
+            <p>Indonesia dikenal sebagai negara dengan keberagaman budaya yang sangat kaya, salah satunya tercermin dalam tradisi kuliner dari setiap daerah. Namun, seiring perkembangan zaman dan globalisasi, banyak generasi muda yang mulai melupakan atau tidak lagi mengenal resep-resep masakan tradisional khas daerahnya. Informasi tentang kuliner lokal pun seringkali hanya tersimpan dalam bentuk teks atau cerita lisan yang perlahan menghilang.
+            Tantangan tersebut mendorong kami menghadirkan solusi edukatif yang tidak hanya menyajikan informasi, tetapi juga mampu menarik minat generasi digital melalui pendekatan teknologi yang relevan. Dari sinilah lahir gagasan untuk mengembangkan QulinerAR—sebuah aplikasi edukasi berbasis Augmented Reality (AR) yang mengangkat kembali kekayaan kuliner nusantara dengan cara yang modern dan interaktif.
+            Kami percaya bahwa dengan menggabungkan budaya dan teknologi, QulinerAR dapat menjadi jembatan antara masa lalu dan masa depan—melestarikan resep-resep warisan leluhur sambil memanfaatkan inovasi digital untuk pembelajaran yang lebih efektif dan menyenangkan.</p>
+          </div>
+          <div class="sosmed">
+  <h3>🌐 Ikuti Kami di Sosial Media</h3>
+  <ul>
+    <li><a href="https://facebook.com/akunanda" target="_blank">📘 Facebook: QulinerAR</a></li>
+    <li><a href="https://instagram.com/akunanda" target="_blank">📸 Instagram: @qulinerar</a></li>
+    <li><a href="https://tiktok.com/@akunanda" target="_blank">🎵 TikTok: @qulinerar</a></li>
+    <li><a href="mailto:info@qulinerar.com">📧 Email: info@qulinerar.com</a></li>
+  </ul>
+</div>
+
+
+        `;
+      } else if (page === "lokasi") {
+  title.innerText = "Jelajahi Kuliner Khas Medan";
+  content.innerHTML = `
+    <h2>🎯 Temukan QulinerAR Terdekat di Sekitarmu!
+Yuk, jelajahi kekayaan kuliner lokal dengan cara yang seru dan edukatif! 📱📍</h2>
+    <p>Cukup scan QR Code di tempat makan pilihanmu dan nikmati pengalaman mengenal sejarah & cerita unik di balik makanan khas daerah 🍽️✨</p>
+    <div class="search-box" data-aos="fade-left" data-aos-delay="200">
+            <input type="text" placeholder="Ketik nama lokasi" oninput="filterProduk(this.value)">
+            <button onclick="startScan()">📷</button>
+          </div>
+    <div class="product-grid">
+      <div class="product" data-aos="fade-down" data-aos-delay="200">
+        <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/mie_aceh_titi_bobrok.jpg" alt="Mie Aceh Titi Bobrok" />
+        <span><strong>Mie Aceh Titi Bobrok</strong><br>Pedas gurih khas Aceh di Medan</span>
+        <button class="button" onclick="window.open('https://www.google.com/maps?q=Mie+Aceh+Titi+Bobrok+Medan')">📍 Lihat di Google Maps</button>
+      </div>
+
+      <div class="product" data-aos="fade-left" data-aos-delay="200">
+        <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/restoran_garuda_medan.jpg" alt="Restoran Garuda" />
+        <span><strong>Restoran Garuda</strong><br>Masakan Padang populer di Medan</span>
+        <button class="button" onclick="window.open('https://maps.app.goo.gl/kjZ4SSqPT6bPtoEV7')">📍 Lihat di Google Maps</button>
+      </div>
+
+      <div class="product" data-aos="fade-right" data-aos-delay="200">
+        <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/lontong_kak_lin.jpg" alt="Lontong Kak Lin" />
+        <span><strong>Lontong Kak Lin</strong><br>Lontong sayur legendaris</span>
+        <button class="button" onclick="window.open('https://www.google.com/maps?q=Lontong+Kak+Lin+Medan')">📍 Lihat di Google Maps</button>
+      </div>
+
+      <div class="product" data-aos="fade-up" data-aos-delay="200">
+        <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/nasi_soto_sinar_pagi.jpg" alt="Soto Medan Sinar Pagi" />
+        <span><strong>Soto Medan Sinar Pagi</strong><br>Kuah santan kental dan gurih</span>
+        <button class="button" onclick="window.open('https://maps.app.goo.gl/H3GacHrupW5AATPXA')">📍 Lihat di Google Maps</button>
+      </div>
+
+      <div class="product" data-aos="fade-down" data-aos-delay="200">
+        <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/bolu_meranti.jpg" alt="Bolu Meranti" />
+        <span><strong>Bolu Meranti</strong><br>Oleh-oleh favorit khas Medan</span>
+        <button class="button" onclick="window.open('https://www.google.com/maps?q=Bolu+Meranti+Medan')">📍 Lihat di Google Maps</button>
+      </div>
+
+      <div class="product" data-aos="fade-left" data-aos-delay="200">
+        <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/bika_ambon_zulaikha.jpg" alt="Bika Ambon Zulaikha" />
+        <span><strong>Bika Ambon Zulaikha</strong><br>Kue legit berpori khas Medan</span>
+        <button class="button" onclick="window.open('https://www.google.com/maps?q=Bika+Ambon+Zulaikha+Medan')">📍 Lihat di Google Maps</button>
+      </div>
+
+    </div>`;
+} else if (page === "scan") {
+        title.innerText = "Scan Produk";
+        content.innerHTML = `
+          <div id="reader"></div>
+          <div id="result">Belum ada hasil scan</div>
+          <button class="button" onclick="stopScan()">Stop Scan</button>`;
+        startScan();
+      } else if (page === 'daftar') {
+        title.innerText = 'Daftar Resep';
+        content.innerHTML = `
+          <h2> Kolaborasi resep tradisional keluarga</h2>
+          <p>
+            Bagikan dan kembangkan resep keluarga bersama
+          </p>
+          <div class="search-box" data-aos="fade-left" data-aos-delay="200">
+            <input type="text" placeholder="Ketik nama masakan" oninput="filterProduk(this.value)">
+            <button onclick="startScan()">📷</button>
+          </div>
+          <div class="product-grid" id="produk-list" data-aos="fade-right" data-aos-delay="200"></div>`;
+        tampilkanProduk();
+      } else if (page === "sejarah") {
+  title.innerText = "Sejarah Makanan Tradisional";
+  content.innerHTML = `
+
+    <div class="resep" data-aos="fade-left" data-aos-delay="200">
+    <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/daun_ubi_tumbuk.jpeg" alt="Daun Ubi Tumbuk" style="width: 100%; border-radius: 8px; margin-bottom: 10px;" />
+      <h1>📜Sejarah Daun Ubi Tumbuk</h1>
+      <h2>🌿Apa itu Daun Ubi Tumbuk?</h2>
+    <p>Daun ubi tumbuk adalah masakan tradisional Indonesia yang terbuat dari daun singkong muda yang ditumbuk halus. Biasanya diolah dengan rempah-rempah dan santan, serta kadang ditambahkan ikan teri atau ikan asin untuk memperkuat rasa.</p>
+
+    <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/rumah_adat.jpg" alt="Daun Ubi Tumbuk" style="width: 100%; border-radius: 8px; margin-bottom: 10px;" />
+      <h1>📜Sejarah Daun Ubi Tumbuk</h1>
+    <h3>🔍Asal dan Persebaran</h3>
+    <p>Masakan ini berasal dari wilayah Sumatera Utara, khususnya suku Mandailing dan Batak. Namun, daun ubi tumbuk juga ditemukan di berbagai daerah lain seperti Minangkabau, Kalimantan (masyarakat Dayak), dan Sulawesi. Tiap daerah memiliki versi dan bumbu khas masing-masing.</p>
+
+    <h3>🏛️Nilai Budaya</h3>
+    <p>Hidangan ini bukan hanya makanan, tetapi juga simbol kearifan lokal dan kebersamaan. Dalam budaya Batak dan Mandailing, daun ubi tumbuk sering disajikan dalam acara adat dan pertemuan keluarga.</p>
+
+    <h3>🧪Bahan Umum</h3>
+    <ul>
+      <li>Daun singkong muda</li>
+      <li>Santan</li>
+      <li>Cabai, bawang merah, bawang putih</li>
+      <li>Serai, lengkuas, jahe</li>
+      <li>Teri/ikan asin (opsional)</li>
+      <li>Kecombrang (opsional)</li>
+    </ul>
+
+    <h3>📦Modernisasi</h3>
+    <p>Kini, daun ubi tumbuk dapat dibuat lebih praktis menggunakan blender. Beberapa versi modern juga dibuat instan atau beku untuk kebutuhan rumah tangga perkotaan.</p>
+
+    <h3>🌶️Kandungan Gizi</h3>
+    <p>Daun singkong mengandung serat, protein nabati, zat besi, vitamin A, C, dan antioksidan yang baik untuk kesehatan. Jika dimasak dengan santan dan rempah, nutrisinya makin kaya.</p>
+
+    <h3>📝Kesimpulan</h3>
+    <p>Daun ubi tumbuk adalah kuliner khas Indonesia yang mencerminkan kekayaan budaya dan alam. Meskipun sederhana, masakan ini memiliki sejarah panjang dan nilai sosial yang tinggi di berbagai komunitas di Nusantara.</p>
+    </div>
+
+    <div class="resep" data-aos="fade-up" data-aos-delay="200">
+    <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/bika_ambon.jpg" alt="Daun Ubi Tumbuk" style="width: 100%; border-radius: 8px; margin-bottom: 10px;" />
+      <h1>📜Sejarah Bika Ambon</h1>
+      <h2>🧁Apa itu Bika Ambon?</h2>
+    <p>Bika Ambon adalah kue tradisional khas kota Medan, Sumatera Utara, yang dikenal karena teksturnya yang berongga, kenyal, dan aromanya yang wangi. Meskipun mengandung kata "Ambon", kue ini tidak berasal dari kota Ambon, Maluku.</p>
+
+    <h2>🔍Asal-usul Nama "Ambon"</h2>
+    <ul>
+      <li>Diduga berasal dari <strong>Jalan Ambon di Medan</strong>, tempat pertama kali kue ini dijual secara populer.</li>
+      <li>Ada pula yang menyebut "Ambon" berasal dari kata dalam bahasa daerah yang berarti harum atau lembut.</li>
+      <li>Sementara sebagian orang keliru menganggap kue ini dari Ambon karena namanya.</li>
+    </ul>
+
+    <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/rumah_adat_bika_ambon.jpg" alt="Daun Ubi Tumbuk" style="width: 100%; border-radius: 8px; margin-bottom: 10px;" />
+    <h2>🏛️Sejarah dan Perkembangan</h2>
+    <p>Bika Ambon merupakan hasil adaptasi dari kue tradisional Melayu yang dimodifikasi dengan bahan lokal seperti santan, telur, air nira, dan tepung tapioka. Perpaduan ini menghasilkan tekstur khas dengan rongga-rongga di dalamnya. Kue ini mulai populer di Medan sejak tahun 1970-an dan kini menjadi salah satu oleh-oleh wajib bagi wisatawan.</p>
+
+    <h2>🧪Ciri Khas Bika Ambon</h2>
+    <ul>
+      <li>Tekstur berongga dan kenyal</li>
+      <li>Aroma harum dari pandan dan air nira</li>
+      <li>Rasa manis legit yang khas</li>
+      <li>Tahan disimpan selama beberapa hari tanpa bahan pengawet</li>
+    </ul>
+
+    <h2>📍Sentra Produksi</h2>
+    <p>Pusat produksi dan penjualan Bika Ambon terkenal berada di <strong>Jalan Majapahit, Medan Petisah</strong>, yang memiliki deretan toko bika ternama seperti Zulaikha, Ayen, dan Murni.</p>
+
+    <h2>🌍Varian Modern</h2>
+    <ul>
+      <li>Bika Ambon rasa pandan</li>
+      <li>Bika Ambon rasa durian</li>
+      <li>Bika Ambon keju dan cokelat</li>
+    </ul>
+
+    <h2>📝Kesimpulan</h2>
+    <p>Bika Ambon adalah warisan kuliner khas Medan yang unik dan menggugah selera. Dengan sejarah yang kaya dan rasa yang khas, kue ini telah menjadi simbol oleh-oleh khas Sumatera Utara yang mendunia.</p>
+  </div>
+
+    <div class="resep" data-aos="fade-right" data-aos-delay="200">
+    <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/soto_medan.jpeg" alt="Daun Ubi Tumbuk" style="width: 80%; border-radius: 8px; margin-bottom: 10px;" />
+      <h1>🍲Sejarah Soto Medan</h1>
+      <h2>📍Asal-usul Soto Medan</h2>
+    <p>
+      Soto Medan adalah salah satu varian soto dari Indonesia yang berasal dari kota Medan, Sumatera Utara. Soto ini memiliki kuah santan yang kental dan rempah-rempah yang kuat, berbeda dari soto-soto lainnya seperti Soto Lamongan atau Soto Betawi.
+    </p>
+    <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/rumah_adat_soto_medan.jpg" alt="Daun Ubi Tumbuk" style="width: 80%; border-radius: 8px; margin-bottom: 10px;" />
+    <p>
+      Makanan ini merupakan hasil akulturasi budaya, terutama antara tradisi kuliner Melayu dan India yang banyak menetap di Medan. Rempah seperti kapulaga, kunyit, dan ketumbar digunakan untuk memberi rasa yang khas seperti kari.
+    </p>
+
+    <h2>🧪Ciri Khas Soto Medan</h2>
+    <ul>
+      <li>Kuah santan kuning kental dengan rempah khas</li>
+      <li>Aroma rempah seperti serai, lengkuas, dan kapulaga</li>
+      <li>Isian: ayam, daging sapi, udang, bihun, kentang goreng, tauge</li>
+      <li>Pelengkap: sambal hijau, jeruk nipis, emping atau kerupuk udang</li>
+    </ul>
+
+    <h2>🧭Sejarah dan Perkembangan</h2>
+    <p>
+      Soto Medan mulai dikenal secara luas sejak awal abad ke-20. Awalnya dijajakan oleh masyarakat Melayu dan pedagang dari luar daerah. Dengan berkembangnya kota Medan sebagai pusat perdagangan dan migrasi, makanan ini pun berkembang dan menjadi ikon kuliner.
+    </p>
+    <p>
+      Salah satu tempat legendaris yang menyajikan Soto Medan adalah <strong>Soto Kesawan</strong>, yang dikenal dengan soto udangnya dan kuah gurih khasnya.
+    </p>
+
+    <h2>🛍️Popularitas</h2>
+    <p>
+      Kini Soto Medan tidak hanya dinikmati oleh masyarakat Sumatera Utara, tetapi telah menyebar ke seluruh Indonesia. Banyak rumah makan dan restoran menghidangkan Soto Medan sebagai menu utama, bahkan hadir dalam bentuk instan dan frozen food.
+    </p>
+
+    <h2>📝Kesimpulan</h2>
+    <p>
+      Soto Medan merupakan simbol kekayaan kuliner Medan yang lahir dari perpaduan budaya lokal dan pengaruh asing. Dengan rasa gurih dan kuah santan berempah, soto ini menjadi favorit masyarakat dari berbagai kalangan, dan menjadi warisan kuliner yang patut dilestarikan.
+    </p>
+  </div>
+
+    <div class="resep" data-aos="fade-down" data-aos-delay="200">
+    <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/mie_gomak.jpeg" alt="Mie Gomak" style="width: 80%; border-radius: 8px; margin-bottom: 10px;" />
+      <h1>🍜Sejarah Mie Gomak
+      <h2>Asal-usul Mie Gomak</h2>
+    <p>Mie Gomak adalah makanan khas suku Batak Toba yang berasal dari daerah Tapanuli, Sumatera Utara. Disebut "gomak" karena dulunya mie ini dicampur dan disajikan menggunakan tangan, sesuai arti kata "gomak" dalam bahasa Batak yang berarti menggenggam atau meraup dengan tangan.</p>
+    <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/mie_gomak2.jpg" alt="Daun Ubi Tumbuk" style="width: 80%; border-radius: 8px; margin-bottom: 10px;" />
+
+    <h2>🧭Latar Budaya</h2>
+    <p>Mie Gomak sering disajikan dalam acara-acara adat Batak, perayaan gereja, dan juga sebagai menu sarapan sehari-hari. Karena menggunakan mie lidi dan bumbu khas Batak seperti andaliman, mie ini punya karakter rasa yang sangat kuat dan khas.</p>
+
+    <h2>🍝Jenis Mie</h2>
+    <p>Mie yang digunakan disebut mie lidi karena bentuknya panjang dan lurus menyerupai lidi. Biasanya terbuat dari tepung terigu dan dibuat secara tradisional oleh masyarakat Batak.</p>
+
+    <h2>🧄Ciri Khas Mie Gomak</h2>
+    <ul>
+      <li>Kuah santan kental berbumbu khas Batak</li>
+      <li>Menggunakan andaliman yang memberi sensasi pedas menggigit</li>
+      <li>Isian berupa kol, daun bawang, telur rebus, dan kadang ikan teri</li>
+      <li>Disajikan dalam dua versi: kuah dan goreng</li>
+      <li>Sambal khas Batak sebagai pelengkap</li>
+    </ul>
+
+    <h2>🛍️Popularitas</h2>
+    <p>Mie Gomak sangat terkenal di daerah Tapanuli dan kawasan Danau Toba. Kini, mie ini sudah menyebar ke berbagai kota besar di Indonesia berkat diaspora Batak. Makanan ini juga selalu hadir dalam festival budaya seperti Festival Danau Toba.</p>
+
+    <h2>📝Kesimpulan</h2>
+    <p>Mie Gomak adalah simbol kekayaan kuliner Batak yang tidak hanya lezat tetapi juga sarat nilai budaya. Teksturnya yang unik dan cita rasanya yang khas membuatnya dijuluki “Spaghetti-nya orang Batak.” Sebuah warisan kuliner lokal yang terus lestari dan berkembang.</p>
+  </div>
+
+    <div class="resep" data-aos="fade-left" data-aos-delay="200">
+    <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/ombus_ombus.png" alt="Daun Ubi Tumbuk" style="width: 80%; border-radius: 8px; margin-bottom: 10px;" />
+      <h1>📜 Sejarah Ombus-Ombus</h1>
+    <h2>📍 Asal-Usul</h2>
+    <p><strong>Ombus-ombus</strong> adalah kue tradisional khas suku <strong>Batak Toba</strong> yang berasal dari daerah <strong>Siborong-borong</strong>, Kabupaten Tapanuli Utara, Sumatera Utara. Nama “ombus-ombus” berasal dari kata dalam bahasa Batak yang berarti <em>“meniup”</em> karena biasanya kue ini disajikan panas-panas dan harus ditiup sebelum dimakan. 🌬️</p>
+    <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/asal_ombus_ombus.jpg" alt="Daun Ubi Tumbuk" style="width: 80%; border-radius: 8px; margin-bottom: 10px;" />
+
+    <h2>🏛️ Peran dalam Budaya Batak</h2>
+    <p>Kue ini memiliki makna simbolik dan sosial yang kuat:</p>
+    <ul>
+      <li>✅ Disajikan dalam <strong>acara adat Batak</strong> seperti <em>mangulosi</em> dan <em>syukuran keluarga</em></li>
+      <li>✅ Menjadi <strong>simbol penghormatan</strong> untuk tamu yang datang</li>
+      <li>✅ Melambangkan <strong>doa dan kehangatan keluarga</strong> 🤲</li>
+    </ul>
+
+    <h2>🍘 Bahan dan Ciri Khas</h2>
+    <p>Ombus-ombus dibuat dengan bahan-bahan lokal yang sederhana:</p>
+    <ul>
+      <li>🌾 Tepung beras</li>
+      <li>🥥 Kelapa parut</li>
+      <li>🍯 Gula merah di bagian dalam</li>
+      <li>🍃 Dibungkus daun pisang, lalu dikukus</li>
+    </ul>
+    <p>Rasanya manis, lembut, dan sedikit gurih dengan aroma khas daun pisang kukus.</p>
+
+    <h2>🧁 Makna dan Filosofi</h2>
+    <p>Kue ini tidak hanya lezat, tapi juga mengandung makna budaya yang dalam:</p>
+    <ul>
+      <li>🍂 <strong>Sederhana</strong> – mencerminkan gaya hidup masyarakat Batak yang bersahaja</li>
+      <li>🔥 <strong>Kehangatan</strong> – disajikan hangat, mencerminkan sambutan ramah</li>
+      <li>🍬 <strong>Manis di dalam</strong> – melambangkan harapan hidup yang penuh berkat</li>
+    </ul>
+
+    <h2>📦 Penyebaran dan Modernisasi</h2>
+    <p>Ombus-ombus kini tidak hanya ditemukan di Siborong-borong, tapi juga menyebar ke daerah seperti Tarutung, Balige, Parapat, bahkan Medan. 🍱</p>
+    <p>Inovasi modern telah melahirkan varian baru seperti ombus-ombus isi <strong>cokelat, keju, dan durian</strong>, namun tetap mempertahankan esensi tradisionalnya. 🎉</p>
+
+    <h2>📝 Kesimpulan</h2>
+    <p><strong>Ombus-ombus</strong> bukan sekadar kudapan, melainkan bagian dari identitas budaya Batak yang mengandung makna kebersamaan, penghargaan, dan kehangatan. Kue ini adalah contoh sempurna bagaimana kuliner bisa menjadi sarana untuk menjaga nilai-nilai leluhur di tengah modernisasi. 💖</p>
+  </div>
+
+    <div class="resep" data-aos="fade-right" data-aos-delay="200">
+    <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/lemang.jpg" alt="Daun Ubi Tumbuk" style="width: 80%; border-radius: 8px; margin-bottom: 10px;" />
+      <h1>📜 Sejarah Lemang</h1>
+      <h2>📍 Asal Usul Lemang</h2>
+    <p><strong>Lemang</strong> adalah makanan tradisional yang terbuat dari <em>beras ketan</em> yang dimasak dalam bambu dengan santan dan garam, lalu dibakar secara perlahan di atas bara api. Makanan ini berasal dari budaya <strong>Melayu dan Minangkabau</strong> dan telah menyebar ke berbagai wilayah seperti <strong>Sumatera Utara, Riau, Kalimantan, bahkan Malaysia dan Brunei</strong>. 🌏</p>
+    <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/rumah_adat_lemang.jpg" alt="Daun Ubi Tumbuk" style="width: 80%; border-radius: 8px; margin-bottom: 10px;" />
+
+    <h2>🌿 Nilai Budaya dan Filosofi</h2>
+    <p>Lemang memiliki makna budaya yang mendalam:</p>
+    <ul>
+      <li>🍃 <strong>Bambu</strong> melambangkan kehidupan dan kebersamaan</li>
+      <li>🔥 Proses pembakaran mengajarkan <strong>kesabaran dan ketekunan</strong></li>
+      <li>🤲 Disajikan saat <strong>hari raya, pesta adat, dan syukuran</strong></li>
+    </ul>
+
+    <h2>🧭 Lemang di Berbagai Daerah</h2>
+    <ul>
+      <li>📍 <strong>Minangkabau</strong>: Disajikan bersama rendang saat Idul Fitri</li>
+      <li>📍 <strong>Batak Mandailing</strong>: Disebut "lamang", hadir dalam upacara adat</li>
+      <li>📍 <strong>Kalimantan & Riau</strong>: Disiapkan saat panen atau acara desa</li>
+      <li>📍 <strong>Malaysia & Brunei</strong>: Dihidangkan saat Lebaran dan Hari Raya</li>
+    </ul>
+
+    <h2>🍚 Proses Pembuatan Lemang</h2>
+    <p>Proses membuat lemang cukup unik dan tradisional:</p>
+    <ul>
+      <li>🌾 Beras ketan dicampur dengan santan dan sedikit garam</li>
+      <li>🍃 Dimasukkan ke dalam bambu yang dilapisi daun pisang</li>
+      <li>🔥 Dibakar miring selama 4–6 jam di atas bara api</li>
+    </ul>
+    <p>Hasilnya: lemang yang <strong>wangi, empuk, gurih, dan legit</strong> 😋</p>
+
+    <h2>🏆 Lemang sebagai Warisan Budaya</h2>
+    <p>Lemang bukan sekadar makanan, tapi juga simbol:</p>
+    <ul>
+      <li>🔗 <strong>Gotong royong</strong>: karena sering dimasak bersama</li>
+      <li>🛐 <strong>Kesucian dan rasa syukur</strong>: disajikan saat hari besar</li>
+      <li>🧓 <strong>Tradisi leluhur</strong>: diwariskan turun-temurun</li>
+    </ul>
+
+    <h2>📌 Kesimpulan</h2>
+    <p><strong>Lemang</strong> adalah warisan kuliner yang mencerminkan <strong>kekayaan budaya, nilai kebersamaan, dan rasa syukur</strong>. Dalam setiap ruas bambu lemang, tersimpan semangat gotong royong dan warisan nenek moyang Nusantara. 🙏🍃🔥</p>
+  </div>
+    
+    <div class="resep" data-aos="fade-up" data-aos-delay="200">
+    <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/arsik _ikan_mas.jpg" alt="Daun Ubi Tumbuk" style="width: 80%; border-radius: 8px; margin-bottom: 10px;" />
+      <h1>📜 Sejarah Arsik Ikan Mas</h1>
+    <h2>📍 Asal-Usul</h2>
+    <p><strong>Arsik</strong> adalah hidangan tradisional khas <strong>Batak Toba</strong> dari Sumatera Utara. Biasanya terbuat dari <strong>ikan mas 🐟</strong> yang dimasak tanpa kuah, menggunakan rempah khas seperti andaliman dan asam cikala. Kata "arsik" mengacu pada teknik memasak dengan bumbu yang ditumis dan disiramkan perlahan hingga meresap ke dalam ikan.</p>
+    <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/rumah_adat_arsik_ikan_mas.jpeg" alt="Daun Ubi Tumbuk" style="width: 80%; border-radius: 8px; margin-bottom: 10px;" />
+
+    <h2>🎯 Makna Budaya dan Filosofi</h2>
+    <p>Arsik bukan sekadar masakan, tetapi juga bagian penting dari adat dan filosofi Batak:</p>
+    <ul>
+      <li>🐟 <strong>Ikan mas</strong> melambangkan kemakmuran dan keberkahan</li>
+      <li>📏 <strong>Kepala ikan</strong> harus menghadap tamu kehormatan — tanda penghargaan</li>
+      <li>🔁 Biasanya disajikan dalam <strong>acara adat seperti pernikahan, kelahiran anak laki-laki, dan syukuran</strong></li>
+    </ul>
+
+    <h2>🌶️ Bumbu Khas Batak</h2>
+    <p>Arsik dikenal karena kekayaan bumbu rempahnya yang unik:</p>
+    <ul>
+      <li>🌶️ <strong>Andaliman</strong> – lada khas Batak yang memberikan sensasi pedas menggigit</li>
+      <li>🍋 <strong>Asam cikala (buah kecombrang)</strong> atau belimbing wuluh sebagai penyeimbang rasa</li>
+      <li>🧄 Bawang putih, bawang merah, kemiri, kunyit, lengkuas, dan jahe</li>
+      <li>🌿 Sereh, lokio (bawang Batak), dan daun jeruk sebagai pelengkap aroma</li>
+    </ul>
+
+    <h2>🧭 Tradisi dan Penyebaran</h2>
+    <p>Setiap daerah Batak seperti <strong>Balige, Tapanuli Utara, Humbang, dan Samosir</strong> memiliki varian arsik, namun tetap mempertahankan cita rasa aslinya. Kini, arsik juga disajikan di rumah makan Batak di berbagai kota besar: Medan, Jakarta, bahkan luar negeri. 🌍</p>
+
+    <h2>🏛️ Peran dalam Adat Batak</h2>
+    <p>Dalam setiap acara adat Batak, arsik selalu hadir sebagai lambang kehormatan. Bila ada kelahiran anak laki-laki pertama, keluarga biasanya menyajikan arsik sebagai bentuk ucapan syukur. 🍼</p>
+
+    <h2>📌 Kesimpulan</h2>
+    <p><strong>Arsik Ikan Mas</strong> adalah lebih dari sekadar makanan: ia adalah <em>warisan budaya</em> yang kaya akan makna, rasa, dan filosofi. Dengan bumbu khas dan penyajian yang penuh simbol, arsik menjadi <strong>lambang identitas Batak</strong> yang membanggakan dan harus dilestarikan. 🙏</p>
+  </div>
+
+    <div class="resep" data-aos="fade-left" data-aos-delay="200">
+    <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/lontong_sayur_medan.jpeg" alt="Daun Ubi Tumbuk" style="width: 80%; border-radius: 8px; margin-bottom: 10px;" />
+      <h1>📜 Sejarah Lontong Sayur Medan</h1>
+    <h2>📍 Asal-Usul</h2>
+    <p><strong>Lontong Sayur Medan</strong> adalah salah satu kuliner ikonik dari <strong>kota Medan</strong>, Sumatera Utara. Biasanya disajikan sebagai <strong>menu sarapan pagi 🍳</strong> atau dalam acara besar seperti <strong>Lebaran dan syukuran keluarga 🕌</strong>. Dibandingkan dengan lontong sayur dari daerah lain, versi Medan memiliki <strong>kuah lebih kental dan kaya rempah 🌶️🥥</strong>.</p>
+    <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/kantor_pos.jpeg" alt="Daun Ubi Tumbuk" style="width: 80%; border-radius: 8px; margin-bottom: 10px;" />
+
+    <h2>🥢 Perpaduan Budaya</h2>
+    <p>Kuliner ini merupakan hasil perpaduan cita rasa dari berbagai etnis di Medan:</p>
+    <ul>
+      <li>🟡 <strong>Melayu</strong> – penggunaan santan kental dan bumbu kuning</li>
+      <li>🔥 <strong>Batak</strong> – sambal pedas dan pelengkap khas seperti sambal teri kacang</li>
+      <li>🍥 <strong>Tionghoa dan India</strong> – pengaruh pada kerupuk, acar, dan aneka topping</li>
+    </ul>
+
+    <h2>🍛 Ciri Khas Lontong Sayur Medan</h2>
+    <p>Yang membedakan lontong sayur Medan dari versi lainnya adalah:</p>
+    <ul>
+      <li>🥥 Kuah santan kuning yang gurih dan aromatik</li>
+      <li>🌶️ Bumbu halus dari bawang, kemiri, kunyit, lengkuas, dan serai</li>
+      <li>🥒 Sayur labu siam, kacang panjang, tahu, dan tempe</li>
+      <li>🍳 Telur balado, kerupuk merah, dan sambal teri sebagai pelengkap</li>
+    </ul>
+
+    <h2>🏛️ Peran dalam Budaya Lokal</h2>
+    <p>Lontong sayur bukan sekadar makanan pagi:</p>
+    <ul>
+      <li>🎉 Disajikan dalam <strong>acara keluarga, syukuran, dan perayaan hari besar</strong></li>
+      <li>👨‍👩‍👧‍👦 <strong>Simbol kebersamaan</strong> karena sering disantap ramai-ramai di pagi hari</li>
+      <li>🍽️ Tersaji di warung dan rumah makan Medan dari pagi hingga siang</li>
+    </ul>
+
+    <h2>📌 Kesimpulan</h2>
+    <p><strong>Lontong Sayur Medan</strong> adalah bukti kekayaan rasa dan keberagaman budaya yang hidup berdampingan di kota Medan. Dari setiap suap lontongnya yang lembut hingga kuah santannya yang menggugah, kuliner ini menghidupkan semangat <strong>kebersamaan dan warisan kuliner Nusantara</strong>. 🙏🍽️</p>
+  </div>
+
+  `;
+} else if (page === 'games') {
+  title.innerText = 'Mini Games';
+  content.innerHTML = `
+    <div class="game-container">
+      <h2>🎮 Tebak Makanan Tradisional</h2>
+      <div id="game">
+        <div class="question" id="question"></div>
+        <div id="options"></div>
+        <div class="score" id="score">Skor: 0</div>
+      </div>
+    </div>
+  `;
+
+  // Jalankan game setelah konten dimuat
+  startGame();
+}
+
+
+    }
+
+    function tampilkanProduk() {
+  const list = document.getElementById('produk-list');
+  list.innerHTML = produkmakanan.map(p => {
+    let onclick = '';
+    if (p.nama === 'Daun Ubi Tumbuk') {
+      onclick = 'onclick="tampilkanResepDaunUbi()"';
+    } else if (p.nama === 'Bika Ambon') {
+      onclick = 'onclick="tampilkanResepBikaAmbon()"';
+    } else if (p.nama === 'Soto Medan') {
+      onclick = 'onclick="tampilkanResepSotoMedan()"';
+    } else if (p.nama === 'Mie Gomak') {
+      onclick = 'onclick="tampilkanResepMieGomak()"';
+    } else if (p.nama === 'Arsik Ikan Mas') {
+      onclick = 'onclick="tampilkanResepArsikIkanMas()"';
+    } else if (p.nama === 'Lontong Sayur Medan') {
+      onclick = 'onclick="tampilkanResepLontongSayurMedan()"';
+    } else if (p.nama === 'Lemang') {
+      onclick = 'onclick="tampilkanResepLemang()"';
+    } else if (p.nama === 'Ombus-Ombus') {
+      onclick = 'onclick="tampilkanResepOmbusOmbus()"';
+    } 
+    return `<div class="product" ${onclick}>
+              <img src="${p.img}" alt="${p.nama}"/>
+              <span>${p.nama}</span>
+            </div>`;
+  }).join('');
+}
+
+
+
+    function tampilkanResepDaunUbi() {
+      const content = document.getElementById("page-content");
+      document.getElementById("page-title").innerText = "Daun Ubi Tumbuk";
+      content.innerHTML = `
+        <div class="resep" data-aos="zoom-in-up">
+          <h2>Sayur Daun Ubi Tumbuk</h2>
+          <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/daun_ubi_tumbuk.jpeg" alt="Sayur Daun Ubi" style="width: 20%; border-radius: 8px; margin-bottom: 10px;">
+          <h3>Asal Usul</h3>
+          <p>Sayur khas Batak, populer di Medan. Daun ubi ditumbuk dan dimasak dengan santan dan bumbu khas.</p>
+          <h3>Bahan-Bahan</h3>
+          <ul data-aos="fade-up" data-aos-delay="100">
+            <li>1 ikat daun ubi muda</li>
+            <li>5 siung bawang merah</li>
+            <li>3 siung bawang putih</li>
+            <li>1 batang serai</li>
+            <li>200 ml santan</li>
+            <li>Ikan teri medan</li>
+            <li>Garam secukupnya</li>
+          </ul>
+          <h3>Cara Memasak</h3>
+          <ol data-aos="fade-left" data-aos-delay="100">
+            <li>Cuci dan tumbuk daun ubi.</li>
+            <li>Tumis bumbu dan serai.</li>
+            <li>Masukkan daun, aduk hingga layu.</li>
+            <li>Masukkan santan dan ikan teri, masak sampai matang.</li>
+          </ol>
+        </div>
+        <div class="video-section">
+      <a href="https://youtu.be/M4XSKnk-nSA?si=C0y3m0L-Wf5Ycb-Q" target="_blank">
+        <img
+          class="video-thumbnail"
+          src="https://img.youtube.com/vi/M4XSKnk-nSA/maxresdefault.jpg"
+          alt="Thumbnail Video Daun Ubi Tumbuk" style="width: 50%" />
+      </a>
+      <br>
+      <a class="video-button" href="https://youtu.be/M4XSKnk-nSA?si=C0y3m0L-Wf5Ycb-Q" target="_blank">
+        🎥 Lihat Video Tutorial
+      </a>
+    </div>
+        <button class="button" onclick="loadPage('daftar')">🔙 Kembali</button>`;
+    }
+    
+    function tampilkanResepBikaAmbon() {
+  const content = document.getElementById("page-content");
+  document.getElementById("page-title").innerText = "Bika Ambon";
+  content.innerHTML = `
+    <div class="resep" data-aos="zoom-in-up">
+      <h2>Bika Ambon</h2>
+      <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/bika_ambon.jpg" alt="Bika Ambon" style="width: 20%; border-radius: 8px; margin-bottom: 10px;">
+      <h3>Asal Usul</h3>
+      <p>Kue tradisional yang terkenal dengan rasa manis dan aroma pandan.</p>
+      <h3>Bahan-Bahan</h3>
+      <ul data-aos="fade-up" data-aos-delay="100">
+        <li>250 gram tepung sagu</li>
+        <li>200 ml santan</li>
+        <li>200 gram gula pasir</li>
+        <li>1 sdt ragi</li>
+        <li>1 sdt air pandan</li>
+      </ul>
+      <h3>Cara Memasak</h3>
+      <ol data-aos="fade-left" data-aos-delay="100">
+        <li>Rebus santan:</li>
+          <ul>
+            <li>Campurkan santan, serai, daun pandan, dan daun jeruk.</li>
+            <li>Rebus hingga mendidih sambil diaduk perlahan agar santan tidak pecah.</li>
+            <li>Setelah mendidih, angkat dan dinginkan. Buang serai dan daun-daunnya.</li>
+          </ul>
+        <li>Aktifkan ragi:</li>
+          <ul>
+            <li>Campurkan ragi instan dengan sedikit air hangat dan sedikit gula.</li>
+            <li>Diamkan selama 5–10 menit hingga berbusa.</li>
+          </ul>
+        <li>Campur bahan kering:</li>
+          <ul>
+            <li>Dalam wadah, campur tepung tapioka, tepung terigu, gula, dan vanili.</li>
+          </ul>
+        <li>Tambahkan kuning telu</li>
+          <ul>
+            <li>Masukkan kuning telur satu per satu sambil diaduk rata.</li>
+          </ul>
+        <li>Masukkan santan sedikit demi sedikit:</li>
+          <ul>
+            <li>Tuang santan yang sudah dingin sedikit demi sedikit sambil terus diaduk.</li>
+            <li>Pastikan adonan tidak menggumpal.</li>
+          </ul>
+        <li>Diamkan adonan:</li>
+          <ul>
+            <li>Tutup adonan dan diamkan di suhu ruang selama ±2–3 jam agar adonan mengembang dan berserat.</li>
+            <li>Jangan diaduk selama proses fermentasi.</li>
+          </ul>
+        <li>Panaskan oven:</li>
+          <ul>
+            <li>Panaskan oven pada suhu 170–180°C.</li>
+            <li>Olesi loyang dengan minyak atau margarin.</li>
+          </ul>
+        <li>Tuang dan panggang:</li>
+          <ul>
+            <li>Tuang adonan ke loyang.</li>
+            <li>Panggang selama ±45–60 menit atau hingga matang, bagian atas kecokelatan dan bagian dalam berserat.</li>
+          </ul>
+        <li>Dinginkan:</li>
+          <ul>
+            <li>Keluarkan dari oven dan biarkan dingin sebelum dipotong agar teksturnya sempurna.</li>
+          </ul>
+      </ol>
+    </div>
+    <div class="video-section">
+      <a href="https://youtu.be/zlLxkTXcTRs?si=sdY2HkOB79kDCIbE" target="_blank">
+        <img
+          class="video-thumbnail"
+          src="https://img.youtube.com/vi/zlLxkTXcTRs/maxresdefault.jpg"
+          alt="Thumbnail Video Bika Ambon" style="width: 50%" />
+      </a>
+      <br>
+      <a class="video-button" href="https://youtu.be/zlLxkTXcTRs?si=sdY2HkOB79kDCIbE" target="_blank">
+        🎥 Lihat Video Tutorial
+      </a>
+    </div>
+    <button class="button" onclick="loadPage('daftar')">🔙 Kembali</button>`;
+}
+	function tampilkanResepSotoMedan() {
+  const content = document.getElementById("page-content");
+  document.getElementById("page-title").innerText = "Soto Medan";
+  content.innerHTML = `
+    <div class="resep" data-aos="zoom-in-up">
+      <h2>Soto Medan</h2>
+      <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/soto_medan.jpeg" alt="Soto Medan" style="width: 20%; border-radius: 8px; margin-bottom: 10px;">
+      <h3>Asal Usul</h3>
+      <p>Sup khas yang kaya rempah dan biasanya menggunakan daging sapi.</p>
+      <h3>Porsi</h3>
+      <p>4-6 orang</p>
+      <h3>Waktu Persiapan</h3>
+      <p>15 menit</p>
+      <h3>Waktu Memasak</h3>
+      <p>1 jam</p>
+      <h3>Bahan-Bahan</h3>
+      <ul data-aos="fade-up" data-aos-delay="100">
+        <li>500 gram daging sapi (potong dadu)</li>
+        <li>2 liter air</li>
+        <li>3 siung bawang putih (haluskan)</li>
+        <li>5 siung bawang merah (haluskan)</li>
+        <li>1 sdt kunyit (haluskan)</li>
+        <li>1 sdt jahe (haluskan)</li>
+        <li>2 batang serai (memarkan)</li>
+        <li>3 lembar daun jeruk</li>
+        <li>Garam dan merica secukupnya</li>
+        <li>Daun bawang dan seledri untuk taburan</li>
+        <li>2 butir telur rebus (opsional)</li>
+        <li>Kerupuk sebagai pelengkap</li>
+      </ul>
+      <h3>Cara Memasak</h3>
+      <ol data-aos="fade-left" data-aos-delay="100">
+        <li>Rebus daging sapi dalam 2 liter air hingga empuk. Angkat dan potong dadu. Simpan kaldu untuk kuah.</li>
+        <li>Panaskan sedikit minyak dalam wajan, tumis bawang putih, bawang merah, kunyit, dan jahe hingga harum.</li>
+        <li>Masukkan bumbu tumis ke dalam kaldu daging. Tambahkan serai, daun jeruk, garam, dan merica. Masak hingga mendidih.</li>
+        <li>Sajikan soto dalam mangkuk, tambahkan potongan daging, taburi dengan daun bawang dan seledri. Tambahkan telur rebus dan kerupuk sebagai pelengkap.</li>
+      </ol>
+    </div>
+    <div class="video-section">
+      <a href="https://youtu.be/9x5UEj3o9H0?si=wS5aWI-Ml9C6tBx9" target="_blank">
+        <img
+          class="video-thumbnail"
+          src="https://img.youtube.com/vi/9x5UEj3o9H0/maxresdefault.jpg"
+          alt="Thumbnail Video Soto Medan" style="width: 50%" />
+      </a>
+      <br>
+      <a class="video-button" href="https://youtu.be/9x5UEj3o9H0?si=wS5aWI-Ml9C6tBx9" target="_blank">
+        🎥 Lihat Video Tutorial
+      </a>
+    </div>
+    <button class="button" onclick="loadPage('daftar')">🔙 Kembali</button>`;
+}
+	
+	function tampilkanResepMieGomak() {
+  const content = document.getElementById("page-content");
+  document.getElementById("page-title").innerText = "Mie Gomak";
+  content.innerHTML = `
+    <div class="resep" data-aos="zoom-in-up">
+      <h2>Mie Gomak</h2>
+      <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/mie_gomak.jpeg" alt="Mie Gomak" style="width: 20%; border-radius: 8px; margin-bottom: 10px;">
+      
+      <h3>Asal Usul</h3>
+      <p>Mie Gomak sering dijuluki sebagai "spaghetti-nya orang Batak". Masakan ini berasal dari Tapanuli, Sumatera Utara dan umumnya disajikan dalam dua versi: kuah dan goreng. Rasanya khas karena menggunakan <em>andaliman</em>, rempah khas Batak.</p>
+
+      <h3>Porsi</h3>
+      <p>4 orang</p>
+
+      <h3>Waktu Memasak</h3>
+      <p>± 45 menit</p>
+
+      <h3>Bahan-Bahan</h3>
+      <ul data-aos="fade-up" data-aos-delay="100">
+        <li>250 gram mie lidi (rebus hingga matang, tiriskan)</li>
+        <li>2 lembar daun salam</li>
+        <li>2 lembar daun jeruk</li>
+        <li>1 buah kecombrang (opsional, iris halus)</li>
+        <li>200 ml santan kental</li>
+        <li>Air secukupnya</li>
+      </ul>
+
+      <h4>Bumbu Halus:</h4>
+      <ul data-aos="fade-left" data-aos-delay="100">
+        <li>5 butir bawang merah</li>
+        <li>3 siung bawang putih</li>
+        <li>5 buah cabai merah keriting</li>
+        <li>1 sdt andaliman</li>
+        <li>1 ruas kunyit</li>
+        <li>Garam dan penyedap secukupnya</li>
+      </ul>
+
+      <h3>Cara Memasak</h3>
+      <ol data-aos="fade-right" data-aos-delay="100">
+        <li>Haluskan semua bumbu hingga benar-benar lembut.</li>
+        <li>Panaskan sedikit minyak, tumis bumbu halus bersama daun salam dan daun jeruk hingga harum.</li>
+        <li>Tambahkan santan dan air secukupnya, masak hingga kuah mendidih sambil diaduk perlahan agar santan tidak pecah.</li>
+        <li>Masukkan irisan kecombrang (jika digunakan) dan mie lidi rebus. Aduk rata hingga kuah meresap.</li>
+        <li>Koreksi rasa, masak hingga kuah sedikit menyusut dan bumbu meresap sempurna.</li>
+        <li>Sajikan hangat, bisa ditambahkan telur rebus dan kerupuk sebagai pelengkap.</li>
+      </ol>
+    </div>
+    <div class="video-section">
+      <a href="https://youtu.be/GJ63sht_NLM?si=MMfks39qa5GiykYi" target="_blank">
+        <img
+          class="video-thumbnail"
+          src="https://img.youtube.com/vi/GJ63sht_NLM/maxresdefault.jpg"
+          alt="Thumbnail Video Mie Gomak" style="width: 50%" />
+      </a>
+      <br>
+      <a class="video-button" href="https://youtu.be/GJ63sht_NLM?si=MMfks39qa5GiykYi" target="_blank">
+        🎥 Lihat Video Tutorial
+      </a>
+    </div>
+    <button class="button" onclick="loadPage('daftar')">🔙 Kembali</button>`;
+}	
+	
+    function tampilkanResepArsikIkanMas() {
+  const content = document.getElementById("page-content");
+  document.getElementById("page-title").innerText = "Arsik Ikan Mas";
+  content.innerHTML = `
+    <div class="resep" data-aos="zoom-in-up">
+      <h2>Arsik Ikan Mas</h2>
+      <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/arsik _ikan_mas.jpg" alt="Arsik Ikan Mas" style="width: 20%; border-radius: 8px; margin-bottom: 10px;">
+
+      <h3>Asal Usul</h3>
+      <p>Arsik adalah masakan khas masyarakat Batak, terutama Batak Toba. Umumnya disajikan dalam acara adat atau perayaan keluarga. Ikan mas dimasak dengan bumbu khas seperti andaliman dan asam cikala (kecombrang muda), menciptakan cita rasa pedas, asam, dan segar yang unik.</p>
+
+      <h3>Porsi</h3>
+      <p>4 orang</p>
+
+      <h3>Waktu Memasak</h3>
+      <p>1 jam</p>
+
+      <h3>Bahan-Bahan</h3>
+      <ul data-aos="fade-up" data-aos-delay="100">
+        <li>1 ekor ikan mas segar (ukuran sedang, bersihkan)</li>
+        <li>2 batang serai (memarkan)</li>
+        <li>5 lembar daun salam</li>
+        <li>1 genggam bawang batak (kincung/kecombrang muda) iris tipis</li>
+        <li>2 batang bawang daun</li>
+        <li>1 buah jeruk nipis</li>
+        <li>Air secukupnya</li>
+      </ul>
+
+      <h4>Bumbu Halus</h4>
+      <ul data-aos="fade-left" data-aos-delay="100">
+        <li>10 siung bawang merah</li>
+        <li>6 siung bawang putih</li>
+        <li>5 butir kemiri</li>
+        <li>2 ruas kunyit</li>
+        <li>1 ruas jahe</li>
+        <li>1 ruas lengkuas</li>
+        <li>1 sdm andaliman</li>
+        <li>7 buah cabai merah keriting</li>
+        <li>Garam dan penyedap secukupnya</li>
+      </ul>
+
+      <h3>Cara Memasak</h3>
+      <ol data-aos="fade-right" data-aos-delay="100">
+        <li>Cuci bersih ikan, lumuri dengan air jeruk nipis dan sedikit garam, diamkan 15 menit lalu bilas.</li>
+        <li>Siapkan wajan, tata sebagian bumbu halus dan irisan kecombrang di dasar wajan, lalu letakkan ikan di atasnya.</li>
+        <li>Tutup ikan dengan sisa bumbu halus, tambahkan daun salam, serai, dan kecombrang.</li>
+        <li>Tuang air hingga ikan hampir terendam. Masak dengan api sedang sampai kuah mengering dan bumbu meresap.</li>
+        <li>Sajikan hangat bersama nasi putih.</li>
+      </ol>
+    </div>
+    <div class="video-section">
+      <a href="https://youtu.be/zekv3x_6O5k?si=ZENm20JN7muNwxXg" target="_blank">
+        <img
+          class="video-thumbnail"
+          src="https://img.youtube.com/vi/zekv3x_6O5k/maxresdefault.jpg"
+          alt="Thumbnail Video Arsik Ikan Mas" style="width: 50%" />
+      </a>
+      <br>
+      <a class="video-button" href="https://youtu.be/zekv3x_6O5k?si=ZENm20JN7muNwxXg" target="_blank">
+        🎥 Lihat Video Tutorial
+      </a>
+    </div>
+    <button class="button" onclick="loadPage('daftar')">🔙 Kembali</button>`;
+}
+
+	function tampilkanResepLontongSayurMedan() {
+  const content = document.getElementById("page-content");
+  document.getElementById("page-title").innerText = "Lontong Sayur Medan";
+  content.innerHTML = `
+    <div class="resep" data-aos="zoom-in-up">
+      <h2>Lontong Sayur Medan</h2>
+      <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/lontong_sayur_medan.jpeg" alt="Lontong Sayur Medan" style="width: 20%; border-radius: 8px; margin-bottom: 10px;">
+      
+      <h3>Asal Usul</h3>
+      <p>Lontong sayur Medan adalah salah satu sarapan khas favorit warga Medan. Berbeda dengan lontong sayur Betawi, versi Medan kaya akan santan, serundeng, dan biasanya dilengkapi telur balado atau sambal teri.</p>
+
+      <h3>Porsi</h3>
+      <p>4–5 orang</p>
+
+      <h3>Bahan-Bahan</h3>
+      <ul data-aos="fade-up" data-aos-delay="100">
+        <li>1 papan lontong (potong-potong)</li>
+        <li>200 gram nangka muda (rebus hingga empuk)</li>
+        <li>150 gram kacang panjang (potong 3 cm)</li>
+        <li>200 ml santan kental</li>
+        <li>500 ml air</li>
+        <li>2 lembar daun salam</li>
+        <li>1 batang serai (geprek)</li>
+        <li>2 lembar daun jeruk</li>
+        <li>Garam dan gula secukupnya</li>
+      </ul>
+
+      <h4>Bumbu Halus</h4>
+      <ul data-aos="fade-left" data-aos-delay="100">
+        <li>6 siung bawang merah</li>
+        <li>4 siung bawang putih</li>
+        <li>4 buah cabai merah besar</li>
+        <li>2 butir kemiri</li>
+        <li>1 ruas kunyit</li>
+        <li>1 sdt ketumbar sangrai</li>
+      </ul>
+
+      <h3>Pelengkap</h3>
+      <ul data-aos="fade-right" data-aos-delay="100">
+        <li>Telur balado</li>
+        <li>Sambal teri</li>
+        <li>Serundeng</li>
+        <li>Kerupuk merah</li>
+      </ul>
+
+      <h3>Cara Memasak</h3>
+      <ol data-aos="fade-down" data-aos-delay="100">
+        <li>Tumis bumbu halus dengan daun salam, serai, dan daun jeruk hingga harum.</li>
+        <li>Masukkan nangka muda, aduk rata. Tambahkan air, masak hingga mendidih.</li>
+        <li>Masukkan kacang panjang, masak hingga layu.</li>
+        <li>Tuang santan, masak dengan api kecil sambil diaduk perlahan.</li>
+        <li>Tambahkan garam dan gula sesuai selera. Koreksi rasa.</li>
+        <li>Sajikan sayur di atas potongan lontong, beri pelengkap seperti telur balado dan serundeng.</li>
+      </ol>
+    </div>
+    <div class="video-section">
+      <a href="https://youtu.be/TRenEXPyzlw?si=j0nDyEiIqAwg9Ned" target="_blank">
+        <img
+          class="video-thumbnail"
+          src="https://img.youtube.com/vi/TRenEXPyzlw/maxresdefault.jpg"
+          alt="Thumbnail Video Lontong Sayur Medan" style="width: 50%" />
+      </a>
+      <br>
+      <a class="video-button" href="https://youtu.be/TRenEXPyzlw?si=j0nDyEiIqAwg9Ned" target="_blank">
+        🎥 Lihat Video Tutorial
+      </a>
+    </div>
+    <button class="button" onclick="loadPage('daftar')">🔙 Kembali</button>`;
+}
+	
+    function tampilkanResepLemang() {
+  const content = document.getElementById("page-content");
+  document.getElementById("page-title").innerText = "Lemang";
+  content.innerHTML = `
+    <div class="resep" data-aos="zoom-in-up">
+      <h2>Lemang</h2>
+      <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/lemang.jpg" alt="Lemang" style="width: 20%; border-radius: 8px; margin-bottom: 10px;">
+
+      <h3>Asal Usul</h3>
+      <p>Lemang adalah makanan khas Sumatera Utara yang terbuat dari beras ketan, santan, dan garam. Proses memasaknya unik karena dilakukan di dalam bambu yang dilapisi daun pisang, lalu dibakar di atas bara api. Lemang biasa disajikan saat perayaan adat, hari raya, atau acara keluarga, dan sangat cocok disantap bersama tapai atau rendang.</p>
+
+      <h3>Porsi</h3>
+      <p>5–6 orang</p>
+
+      <h3>Bahan-Bahan</h3>
+      <ul data-aos="fade-up" data-aos-delay="100">
+        <li>500 gram beras ketan putih (rendam 2–3 jam, tiriskan)</li>
+        <li>500 ml santan kental</li>
+        <li>1 sdt garam</li>
+        <li>Daun pisang (untuk lapisan)</li>
+        <li>Batang bambu ukuran sedang (panjang ±30 cm)</li>
+      </ul>
+
+      <h3>Cara Memasak</h3>
+      <ol data-aos="fade-left" data-aos-delay="100">
+        <li>Campurkan beras ketan yang sudah direndam dengan santan dan garam, aduk rata.</li>
+        <li>Lapisi bagian dalam bambu dengan daun pisang (agar lemang tidak lengket dan wangi).</li>
+        <li>Isi bambu dengan campuran beras ketan dan santan sekitar 3/4 tinggi bambu.</li>
+        <li>Bakar bambu dalam posisi miring di atas bara api selama 4–5 jam, sambil sesekali diputar agar matang merata.</li>
+        <li>Setelah matang, biarkan dingin lalu belah bambu untuk mengeluarkan lemang.</li>
+        <li>Sajikan dengan tapai hitam atau rendang sebagai pelengkap.</li>
+      </ol>
+    </div>
+    <div class="video-section">
+      <a href="https://youtu.be/6T3SkT3sMrM?si=CTMgSNM_u1sp-q3v" target="_blank">
+        <img
+          class="video-thumbnail"
+          src="https://img.youtube.com/vi/6T3SkT3sMrM/maxresdefault.jpg"
+          alt="Thumbnail Video Lemang" style="width: 50%" />
+      </a>
+      <br>
+      <a class="video-button" href="https://youtu.be/6T3SkT3sMrM?si=CTMgSNM_u1sp-q3v" target="_blank">
+        🎥 Lihat Video Tutorial
+      </a>
+    </div>
+    <button class="button" onclick="loadPage('daftar')">🔙 Kembali</button>`;
+}
+	
+    function tampilkanResepOmbusOmbus() {
+  const content = document.getElementById("page-content");
+  document.getElementById("page-title").innerText = "Kue Ombus-Ombus";
+  content.innerHTML = `
+    <div class="resep" data-aos="zoom-in-up">
+      <h2>Kue Ombus-Ombus</h2>
+      <img src="https://raw.githubusercontent.com/dhani0010/QulinerAR/main/ombus_ombus.png" alt="Kue Ombus-Ombus" style="width: 20%; border-radius: 8px; margin-bottom: 10px;">
+      
+      <h3>Asal Usul</h3>
+      <p>Kue Ombus-Ombus berasal dari Tapanuli, Sumatera Utara. Nama "ombus-ombus" berasal dari kebiasaan orang meniup (mengombus) kue ini saat masih panas.</p>
+
+      <h3>Porsi</h3>
+      <p>10 buah</p>
+
+      <h3>Bahan-Bahan</h3>
+      <ul data-aos="fade-up" data-aos-delay="100">
+        <li>250 gram tepung beras</li>
+        <li>150 gram gula merah (serut halus)</li>
+        <li>1/2 sdt garam</li>
+        <li>Air secukupnya</li>
+        <li>Daun pisang untuk membungkus</li>
+      </ul>
+
+      <h3>Cara Membuat</h3>
+      <ol data-aos="fade-left" data-aos-delay="100">
+        <li>Campur tepung beras, garam, dan air hingga adonan kalis.</li>
+        <li>Ambil sejumput adonan, pipihkan, beri isian gula merah, lalu bentuk bulat lonjong.</li>
+        <li>Bungkus dengan daun pisang dan sematkan lidi.</li>
+        <li>Kukus selama 20–30 menit hingga matang.</li>
+        <li>Sajikan hangat untuk rasa yang nikmat.</li>
+      </ol>
+    </div>
+    <div class="video-section">
+      <a href="https://youtu.be/Pyv1cTp8oEw?si=LYfX87h9OsPxyUxf" target="_blank">
+        <img
+          class="video-thumbnail"
+          src="https://img.youtube.com/vi/Pyv1cTp8oEw/maxresdefault.jpg"
+          alt="Thumbnail Video Ombus-Ombus" style="width: 50%" />
+      </a>
+      <br>
+      <a class="video-button" href="https://youtu.be/Pyv1cTp8oEw?si=LYfX87h9OsPxyUxf" target="_blank">
+        🎥 Lihat Video Tutorial
+      </a>
+    </div>
+    <button class="button" onclick="loadPage('daftar')">🔙 Kembali</button>`;
+}
+
+
+    function startScan() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      alert("🚫 Browser tidak mendukung kamera.");
+      return;
+    }
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function(stream) {
+        const html5QrCode = new Html5Qrcode("reader");
+        html5QrCode.start(
+          { facingMode: "environment" },
+          {
+            fps: 10,
+            qrbox: 250
+          },
+          qrCodeMessage => {
+            document.getElementById("result").innerText = "✅ Hasil: " + qrCodeMessage;
+          },
+          errorMessage => {
+            console.warn("❌ Scan gagal: ", errorMessage);
+          }
+        ).catch(err => {
+          alert("Gagal memulai QR scanner: " + err);
+        });
+      })
+      .catch(function(err) {
+        alert("🚫 Kamera tidak diizinkan atau tidak tersedia: " + err.message);
+        document.getElementById("reader").innerHTML = `
+          <p>📷 Kamera tidak tersedia. Silakan upload gambar QR:</p>
+          <input type="file" accept="image/*" onchange="scanImage(event)">
+        `;
+      });
+  }
+
+  function scanImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const html5QrCode = new Html5Qrcode("reader");
+    html5QrCode.scanFile(file, true)
+      .then(decodedText => {
+        document.getElementById("result").innerText = "✅ Hasil: " + decodedText;
+      })
+      .catch(err => {
+        document.getElementById("result").innerText = "❌ Gagal membaca gambar: " + err;
+      });
+  }
+
+    function stopScan() {
+      if (html5QrCode) html5QrCode.stop().catch(err => console.error("Stop error:", err));
+    }
+
+    function filterProduk(keyword) {
+  const list = document.getElementById("produk-list");
+  const filtered = produkmakanan.filter(p => p.nama.toLowerCase().includes(keyword.toLowerCase()));
+  list.innerHTML = filtered.map(p => `
+    <div class="product">
+      <img src="${p.img}" alt="${p.nama}" />
+      <span>${p.nama}</span>
+    </div>`).join("");
+}
+  </script>
+  <script>
+  const questions = [
+    {
+      question: "Makanan khas Medan dengan tekstur berongga dan rasa legit?",
+      options: ["Lontong Sayur", "Bika Ambon", "Lemang", "Mie Gomak"],
+      answer: "Bika Ambon"
+    },
+    {
+      question: "Masakan khas Batak dari daun singkong yang ditumbuk?",
+      options: ["Gado-Gado", "Daun Ubi Tumbuk", "Urap", "Sayur Asem"],
+      answer: "Daun Ubi Tumbuk"
+    },
+    {
+      question: "Mie khas Toba yang disebut spageti Batak?",
+      options: ["Mie Aceh", "Bakmi Jawa", "Mie Gomak", "Laksa"],
+      answer: "Mie Gomak"
+    },
+    {
+    question: "Makanan khas Sumatera Barat yang terbuat dari beras ketan dibungkus daun pisang dan dimasak dalam bambu?",
+    options: ["Lemang", "Lontong", "Lapek Bugis", "Bika Ambon"],
+    answer: "Lemang"
+    },
+    {
+    question: "Kue khas Medan berwarna kuning dan berongga, sering dijadikan oleh-oleh?",
+    options: ["Bolu Meranti", "Bika Ambon", "Lapis Legit", "Nagasari"],
+    answer: "Bika Ambon"
+    },
+    {
+    question: "Apa nama mie khas Batak yang sering disebut 'spageti orang Batak'?",
+    options: ["Mie Gomak", "Mie Aceh", "Mie Kocok", "Mie Jawa"],
+    answer: "Mie Gomak"
+    },
+    {
+    question: "Masakan khas Batak yang terbuat dari darah babi dan bumbu khas disebut?",
+    options: ["Saksang", "Arsik", "Gulai", "Rendang"],
+    answer: "Saksang"
+    },
+    {
+    question: "Makanan khas Padang yang dinobatkan sebagai makanan terenak di dunia oleh CNN Travel?",
+    options: ["Dendeng Batokok", "Gulai Ikan", "Rendang", "Ayam Pop"],
+    answer: "Rendang"
+    }
+
+  ];
+
+  let current = 0;
+  let score = 0;
+
+  function startGame() {
+    current = 0;
+    score = 0;
+    loadQuestion();
+  }
+
+  function loadQuestion() {
+    const q = questions[current];
+    document.getElementById("question").textContent = q.question;
+    const optionsEl = document.getElementById("options");
+    optionsEl.innerHTML = "";
+    q.options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = opt;
+      btn.className = "option";
+      btn.onclick = () => checkAnswer(opt);
+      optionsEl.appendChild(btn);
+    });
+    updateScore();
+  }
+
+  function checkAnswer(selected) {
+    if (selected === questions[current].answer) {
+      score++;
+      alert("✅ Benar!");
+    } else {
+      alert("❌ Salah. Jawaban benar: " + questions[current].answer);
+    }
+    current++;
+    if (current < questions.length) {
+      loadQuestion();
+    } else {
+      document.getElementById("question").textContent = "Permainan selesai!";
+      document.getElementById("options").innerHTML = "";
+      updateScore(true);
+    }
+  }
+
+  function updateScore(final = false) {
+    const scoreText = final ? `Skor akhir: ${score} / ${questions.length}` : `Skor: ${score}`;
+    document.getElementById("score").textContent = scoreText;
+  }
+</script>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+<!-- Tombol Mengambang Mini Game -->
+<button id="game-button" class="floating-game-btn" onclick="loadPage('games')">
+  🎮
+</button>
+
+
+</body>
+</html>

@@ -1324,38 +1324,34 @@ Yuk, jelajahi kekayaan kuliner lokal dengan cara yang seru dan edukatif! 📱�
 
 
     function startScan() {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      alert("🚫 Browser tidak mendukung kamera.");
-      return;
-    }
+  Html5Qrcode.getCameras().then(devices => {
+    if (devices && devices.length) {
+      // Pilih kamera belakang jika tersedia
+      const backCamera = devices.find(d => d.label.toLowerCase().includes('back')) || devices[0];
+      const cameraId = backCamera.id;
 
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(function(stream) {
-        const html5QrCode = new Html5Qrcode("reader");
-        html5QrCode.start(
-          { facingMode: "environment" },
-          {
-            fps: 10,
-            qrbox: 250
-          },
-          qrCodeMessage => {
-            document.getElementById("result").innerText = "✅ Hasil: " + qrCodeMessage;
-          },
-          errorMessage => {
-            console.warn("❌ Scan gagal: ", errorMessage);
-          }
-        ).catch(err => {
-          alert("Gagal memulai QR scanner: " + err);
-        });
-      })
-      .catch(function(err) {
-        alert("🚫 Kamera tidak diizinkan atau tidak tersedia: " + err.message);
-        document.getElementById("reader").innerHTML = `
-          <p>📷 Kamera tidak tersedia. Silakan upload gambar QR:</p>
-          <input type="file" accept="image/*" onchange="scanImage(event)">
-        `;
+      const html5QrCode = new Html5Qrcode("reader");
+      html5QrCode.start(
+        cameraId,
+        {
+          fps: 10,
+          qrbox: 250
+        },
+        qrCodeMessage => {
+          document.getElementById("result").innerText = "✅ Hasil: " + qrCodeMessage;
+        },
+        errorMessage => {
+          console.warn("Scan gagal: ", errorMessage);
+        }
+      ).catch(err => {
+        alert("Gagal memulai QR scanner: " + err);
       });
-  }
+    }
+  }).catch(err => {
+    alert("Tidak bisa mengakses kamera: " + err);
+  });
+}
+
 
   function scanImage(event) {
     const file = event.target.files[0];
